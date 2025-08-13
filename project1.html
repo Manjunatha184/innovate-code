@@ -1,0 +1,2069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedCare Professional Healthcare Management System - Demo</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            /* Professional Grayscale Palette */
+            --white: #ffffff;
+            --gray-50: #f8f9fa;
+            --gray-100: #f1f3f4;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            
+            /* Status indicators */
+            --status-success: #28a745;
+            --status-warning: #ffc107;
+            --status-danger: #dc3545;
+            --status-info: #17a2b8;
+            
+            /* Shadows and effects */
+            --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            --shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.125);
+            
+            /* Border radius */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--gray-50);
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+
+        /* Hide all sections by default */
+        .page-section {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Professional Navigation */
+        .professional-navbar {
+            background-color: var(--white);
+            border-bottom: 2px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+        }
+
+        .navbar-brand-enhanced {
+            font-weight: 900;
+            font-size: 2.2rem;
+            color: var(--gray-900);
+            text-decoration: none;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand-enhanced:hover {
+            color: var(--gray-700);
+            transform: translateY(-1px);
+        }
+
+        .brand-subtitle {
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: var(--gray-600);
+            letter-spacing: 3px;
+            margin-top: -0.3rem;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        /* Navigation Links */
+        .nav-link {
+            color: var(--gray-700);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: all 0.2s ease;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-link:hover {
+            color: var(--gray-900);
+            background-color: var(--gray-100);
+        }
+
+        /* Professional Container */
+        .professional-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            min-height: calc(100vh - 140px);
+        }
+
+        /* Professional Cards */
+        .professional-card {
+            background-color: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .professional-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--gray-300);
+            transform: translateY(-2px);
+        }
+
+        .professional-header {
+            background-color: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 1.5rem 2rem;
+        }
+
+        .professional-header h1,
+        .professional-header h2,
+        .professional-header h3 {
+            color: var(--gray-900);
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .professional-header p {
+            color: var(--gray-600);
+            margin: 0.5rem 0 0 0;
+            font-weight: 400;
+        }
+
+        /* Professional Buttons */
+        .btn-professional {
+            background-color: var(--gray-900);
+            border: 1px solid var(--gray-900);
+            color: var(--white);
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .btn-professional:hover {
+            background-color: var(--gray-800);
+            border-color: var(--gray-800);
+            color: var(--white);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline-professional {
+            background-color: transparent;
+            border: 1px solid var(--gray-600);
+            color: var(--gray-700);
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .btn-outline-professional:hover {
+            background-color: var(--gray-900);
+            border-color: var(--gray-900);
+            color: var(--white);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline-professional.active {
+            background-color: var(--gray-800);
+            border-color: var(--gray-800);
+            color: var(--white);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--white) 0%, var(--gray-50) 100%);
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 0 2rem;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        /* Feature Section */
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background-color: var(--gray-100);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--gray-700);
+            font-size: 2rem;
+        }
+
+        /* Statistics cards */
+        .stats-card {
+            background-color: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.2s ease;
+            height: 100%;
+        }
+
+        .stats-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--gray-300);
+            transform: translateY(-3px);
+        }
+
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-label {
+            color: var(--gray-600);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Professional Timeline */
+        .professional-timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .professional-timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--gray-300);
+        }
+
+        .timeline-item-professional {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 80px;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .timeline-marker-professional {
+            position: absolute;
+            left: 18px;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            background-color: var(--white);
+            border: 3px solid var(--gray-600);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        /* Status Badges */
+        .professional-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--white);
+        }
+
+        .status-completed { background-color: var(--gray-800); }
+        .status-pending { background-color: var(--gray-600); }
+        .status-cancelled { background-color: var(--gray-400); color: var(--gray-900); }
+
+        /* User Info */
+        .user-info {
+            background-color: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem 1.25rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .user-info:hover {
+            background-color: var(--gray-200);
+            border-color: var(--gray-400);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Loading animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gray-300);
+            border-radius: 50%;
+            border-top-color: var(--gray-700);
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .professional-container { padding: 1rem 0.5rem; }
+            .timeline-item-professional { padding-left: 60px; }
+            .professional-timeline::before { left: 20px; }
+            .timeline-marker-professional { left: 8px; }
+            .navbar-brand-enhanced { font-size: 1.8rem; }
+        }
+
+        /* Form Styles */
+        .form-control {
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--gray-600);
+            box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.1);
+        }
+
+        /* Table Styles */
+        .table-professional {
+            background-color: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-md);
+        }
+
+        .table-professional th {
+            background-color: var(--gray-100);
+            color: var(--gray-900);
+            font-weight: 600;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        /* Demo Badge */
+        .demo-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, var(--gray-800), var(--gray-600));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1040;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Success Message */
+        .success-message {
+            background-color: var(--status-success);
+            color: white;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            margin: 1rem 0;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Demo Badge -->
+    <div class="demo-badge">
+        <i class="fas fa-play-circle me-1"></i>DEMO MODE
+    </div>
+
+    <!-- Professional Navigation -->
+    <nav class="professional-navbar">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="navbar-brand-enhanced" onclick="showPage('home')">
+                    MEDCARE
+                                    </div>
+                
+                <div class="d-flex align-items-center gap-3">
+                    <div id="nav-guest" class="d-flex gap-2">
+                        <span class="nav-link" onclick="showPage('login')">
+                            <i class="fas fa-sign-in-alt me-1"></i>Login
+                        </span>
+                        <span class="nav-link" onclick="showPage('register')">
+                            <i class="fas fa-user-plus me-1"></i>Register
+                        </span>
+                    </div>
+                    
+                    <div id="nav-user" class="d-flex align-items-center gap-3" style="display: none;">
+                        <div class="dropdown">
+                            <div class="user-info dropdown-toggle" data-bs-toggle="dropdown">
+                                <i class="fas fa-user-circle me-2"></i><span id="current-user">John Doe</span>
+                            </div>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#" onclick="showDashboard()">
+                                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                                </a></li>
+                                <li><a class="dropdown-item" href="#" onclick="showPage('medical-timeline')">
+                                    <i class="fas fa-history me-2"></i>Medical History
+                                </a></li>
+                                <li><a class="dropdown-item" href="#" onclick="showPage('book-appointment')">
+                                    <i class="fas fa-calendar-plus me-2"></i>Book Appointment
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="#" onclick="logout()">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page-section active">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content animate-fadeInUp">
+                <h1 class="hero-title">
+                    <i class="fas fa-heartbeat me-3" style="color: var(--gray-700);"></i>
+                    MEDCARE
+                </h1>
+                <p class="hero-subtitle">Professional Healthcare Management System</p>
+                <p class="text-muted mb-4">
+                    Complete healthcare management solution for patients, doctors, and hospitals. 
+                    Streamline appointments, manage medical records, and leverage AI-powered health insights 
+                    in a secure, professional environment.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <button class="btn-professional" onclick="showPage('login')">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login Demo
+                    </button>
+                    <button class="btn-outline-professional" onclick="showPage('register')">
+                        <i class="fas fa-user-plus me-2"></i>Register Demo
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <div class="professional-container">
+            <div class="text-center mb-5 animate-fadeInUp">
+                <h2 class="display-5 fw-bold mb-3">Professional Healthcare Solutions</h2>
+                <p class="lead text-muted">Comprehensive tools designed for modern healthcare management</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="professional-card text-center p-4 animate-fadeInUp">
+                        <div class="feature-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h4>Appointment Management</h4>
+                        <p class="text-muted">Streamlined appointment booking, scheduling, and management system for patients and healthcare providers.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="professional-card text-center p-4 animate-fadeInUp">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-medical"></i>
+                        </div>
+                        <h4>Medical Records</h4>
+                        <p class="text-muted">Secure digital medical records management with easy access to patient history and treatment plans.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="professional-card text-center p-4 animate-fadeInUp">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4>AI Health Insights</h4>
+                        <p class="text-muted">Advanced AI-powered health predictions and insights to support better healthcare decisions.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="professional-card text-center p-4 animate-fadeInUp">
+                        <div class="feature-icon">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <h4>Hospital Management</h4>
+                        <p class="text-muted">Comprehensive hospital administration tools for managing staff, patients, and resources efficiently.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="professional-card text-center p-4 animate-fadeInUp">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Security & Privacy</h4>
+                        <p class="text-muted">HIPAA-compliant security measures ensuring patient data privacy and regulatory compliance.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="professional-card text-center p-4 animate-fadeInUp">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4>Analytics & Reports</h4>
+                        <p class="text-muted">Comprehensive analytics and reporting tools for healthcare insights and performance tracking.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Type Selection -->
+            <div class="row mt-5">
+                <div class="col-12 text-center mb-4">
+                    <h2 class="display-6 fw-bold mb-3">Choose Your Access Level</h2>
+                    <p class="lead text-muted">Select the appropriate portal for your role</p>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="professional-card text-center h-100 animate-fadeInUp">
+                        <div class="card-body p-4">
+                            <div class="feature-icon mx-auto mb-3" style="width: 60px; height: 60px;">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h4 class="mb-3">Patient Portal</h4>
+                            <p class="text-muted mb-4">
+                                Book appointments, view medical records, and manage your healthcare journey.
+                            </p>
+                            <button class="btn-outline-professional" onclick="demoLogin('patient')">
+                                <i class="fas fa-play me-2"></i>Demo Patient Portal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="professional-card text-center h-100 animate-fadeInUp">
+                        <div class="card-body p-4">
+                            <div class="feature-icon mx-auto mb-3" style="width: 60px; height: 60px;">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <h4 class="mb-3">Doctor Portal</h4>
+                            <p class="text-muted mb-4">
+                                Manage appointments, patient records, and provide professional healthcare services.
+                            </p>
+                            <button class="btn-outline-professional" onclick="demoLogin('doctor')">
+                                <i class="fas fa-play me-2"></i>Demo Doctor Portal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="professional-card text-center h-100 animate-fadeInUp">
+                        <div class="card-body p-4">
+                            <div class="feature-icon mx-auto mb-3" style="width: 60px; height: 60px;">
+                                <i class="fas fa-hospital"></i>
+                            </div>
+                            <h4 class="mb-3">Hospital Portal</h4>
+                            <p class="text-muted mb-4">
+                                Comprehensive hospital management, staff coordination, and patient administration.
+                            </p>
+                            <button class="btn-outline-professional" onclick="demoLogin('hospital')">
+                                <i class="fas fa-play me-2"></i>Demo Hospital Portal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN PAGE -->
+    <div id="login" class="page-section">
+        <div class="professional-container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="professional-card animate-fadeInUp">
+                        <div class="professional-header text-center">
+                            <h2>Welcome Back</h2>
+                            <p>Sign in to your MedCare account</p>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="alert alert-info" role="alert">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>Demo Mode:</strong> Use any credentials to login and explore different user roles.
+                            </div>
+                            <form id="loginForm">
+                                <div class="mb-3">
+                                    <label class="form-label">User Type</label>
+                                    <select class="form-control" id="userType">
+                                        <option value="patient">Patient</option>
+                                        <option value="doctor">Doctor</option>
+                                        <option value="hospital">Hospital Administrator</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" placeholder="Enter your email">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" placeholder="Enter your password">
+                                </div>
+                                <button type="submit" class="btn-professional w-100">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Login to Demo
+                                </button>
+                            </form>
+                            <div class="text-center mt-3">
+                                <p>Don't have an account? <a href="#" onclick="showPage('register')" class="text-decoration-none">Register here</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REGISTER PAGE -->
+    <div id="register" class="page-section">
+        <div class="professional-container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="professional-card animate-fadeInUp">
+                        <div class="professional-header text-center">
+                            <h2>Create Account</h2>
+                            <p>Join MedCare Professional Healthcare System</p>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="alert alert-info" role="alert">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>Demo Mode:</strong> Fill out the form to see the registration process.
+                            </div>
+                            <form id="registerForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Full Name</label>
+                                        <input type="text" class="form-control" placeholder="John Doe" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">User Type</label>
+                                        <select class="form-control" required>
+                                            <option value="patient">Patient</option>
+                                            <option value="doctor">Doctor</option>
+                                            <option value="hospital">Hospital Administrator</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" placeholder="john@example.com" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Phone</label>
+                                        <input type="tel" class="form-control" placeholder="+1 (555) 123-4567" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Password</label>
+                                        <input type="password" class="form-control" placeholder="Enter password" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Confirm Password</label>
+                                        <input type="password" class="form-control" placeholder="Confirm password" required>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                                            <label class="form-check-label" for="termsCheck">
+                                                I agree to the Terms of Service and Privacy Policy
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn-professional w-100">
+                                    <i class="fas fa-user-plus me-2"></i>Create Demo Account
+                                </button>
+                            </form>
+                            <div class="text-center mt-3">
+                                <p>Already have an account? <a href="#" onclick="showPage('login')" class="text-decoration-none">Login here</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PATIENT DASHBOARD -->
+    <div id="patient-dashboard" class="page-section">
+        <div class="professional-container">
+            <div class="professional-header animate-fadeInUp">
+                <h1><i class="fas fa-tachometer-alt me-3"></i>Patient Dashboard</h1>
+                <p>Welcome back, John Doe. Here's your healthcare overview.</p>
+            </div>
+
+            <!-- Success Message -->
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle me-2"></i>Welcome to your Patient Dashboard! Explore all features below.
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="row mb-4">
+                <div class="col-md-3 mb-3">
+                    <div class="stats-card animate-fadeInUp">
+                        <div class="stats-number">12</div>
+                        <div class="stats-label">Total Appointments</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="stats-card animate-fadeInUp">
+                        <div class="stats-number">8</div>
+                        <div class="stats-label">Completed</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="stats-card animate-fadeInUp">
+                        <div class="stats-number">5</div>
+                        <div class="stats-label">Medical Reports</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="stats-card animate-fadeInUp">
+                        <div class="stats-number">3</div>
+                        <div class="stats-label">AI Predictions</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="professional-card animate-fadeInUp">
+                        <div class="professional-header">
+                            <h3>Quick Actions</h3>
+                            <p>Access your most common healthcare tasks</p>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row">
+                                <div class="col-md-3 mb-3">
+                                    <button class="btn-professional w-100" onclick="showPage('book-appointment')">
+                                        <i class="fas fa-calendar-plus me-2"></i>Book Appointment
+                                    </button>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <button class="btn-outline-professional w-100" onclick="showPage('medical-timeline')">
+                                        <i class="fas fa-history me-2"></i>Medical History
+                                    </button>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <button class="btn-outline-professional w-100" onclick="showFeatureDemo('Request Report')">
+                                        <i class="fas fa-file-medical me-2"></i>Request Report
+                                    </button>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <button class="btn-outline-professional w-100" onclick="showFeatureDemo('Upload Records')">
+                                        <i class="fas fa-upload me-2"></i>Upload Records
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activities -->
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="professional-card animate-fadeInUp">
+                        <div class="professional-header">
+                            <h3>Recent Activities</h3>
+                            <p>Your latest appointments and medical updates</p>
+                        </div>
+                        <div class="card-body p-4">
+                            <h5 class="mb-3">Recent Appointments</h5>
+                            <div class="p-3 mb-2 bg-light rounded">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">General Checkup</h6>
+                                        <small class="text-muted">December 15, 2024 with Dr. Smith</small>
+                                    </div>
+                                    <span class="professional-badge status-completed">Completed</span>
+                                </div>
+                            </div>
+                            <div class="p-3 mb-2 bg-light rounded">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">Cardiology Consultation</h6>
+                                        <small class="text-muted">December 20, 2024 with Dr. Johnson</small>
+                                    </div>
+                                    <span class="professional-badge status-pending">Pending</span>
+                                </div>
+                            </div>
+                            <div class="p-3 mb-2 bg-light rounded">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">Blood Test</h6>
+                                        <small class="text-muted">December 25, 2024 with Dr. Davis</small>
+                                    </div>
+                                    <span class="professional-badge status-pending">Pending</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="professional-card animate-fadeInUp">
+                        <div class="professional-header">
+                            <h4>Upcoming Appointments</h4>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="mb-3 p-3 bg-light rounded">
+                                <h6 class="mb-1">Cardiology Consultation</h6>
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar me-1"></i>Dec 20, 2024<br>
+                                    <i class="fas fa-user-md me-1"></i>Dr. Johnson<br>
+                                    <i class="fas fa-clock me-1"></i>2:30 PM
+                                </small>
+                            </div>
+                            <div class="mb-3 p-3 bg-light rounded">
+                                <h6 class="mb-1">Blood Test</h6>
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar me-1"></i>Dec 25, 2024<br>
+                                    <i class="fas fa-user-md me-1"></i>Dr. Davis<br>
+                                    <i class="fas fa-clock me-1"></i>9:00 AM
+                                </small>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn-outline-professional btn-sm w-100" onclick="showPage('book-appointment')">
+                                    <i class="fas fa-plus me-1"></i>Book New Appointment
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Health Summary -->
+                    <div class="professional-card animate-fadeInUp">
+                        <div class="professional-header">
+                            <h4>Health Summary</h4>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <span>Total Visits</span>
+                                    <strong>12</strong>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <span>Completed</span>
+                                    <strong>8</strong>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <span>Reports</span>
+                                    <strong>5</strong>
+                                </div>
+                            </div>
+                            <div class="mb-0">
+                                <div class="d-flex justify-content-between">
+                                    <span>AI Predictions</span>
+                                    <strong>3</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MEDICAL TIMELINE -->
+    <div id="medical-timeline" class="page-section">
+        <div class="professional-container">
+            <div class="professional-header animate-fadeInUp">
+                <h1><i class="fas fa-history me-3"></i>Medical History</h1>
+                <p>Professional view of your healthcare journey and medical appointments</p>
+            </div>
+
+            <!-- Navigation Controls -->
+            <div class="row mt-4 animate-fadeInUp">
+                <div class="col-md-8">
+                    <div class="btn-group" role="group">
+                        <button class="btn-outline-professional active" onclick="filterTimeline('all')">All Records</button>
+                        <button class="btn-outline-professional" onclick="filterTimeline('2024')">2024</button>
+                        <button class="btn-outline-professional" onclick="filterTimeline('2023')">2023</button>
+                        <button class="btn-outline-professional" onclick="filterTimeline('2022')">2022</button>
+                    </div>
+                </div>
+                <div class="col-md-4 text-end">
+                    <button class="btn-professional" onclick="showPage('patient-dashboard')">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chart Section -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="professional-card animate-fadeInUp">
+                        <div class="professional-header">
+                            <h3><i class="fas fa-chart-line me-2"></i>Health Visits Timeline</h3>
+                            <p class="mb-0">Visual representation of your medical appointments over time</p>
+                        </div>
+                        <div class="card-body p-4">
+                            <div style="height: 350px;">
+                                <canvas id="healthChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="row mt-4">
+                <div class="col-md-3 mb-3">
+                    <div class="stats-card animate-fadeInUp">
+                        <div class="stats-number">12</div>
+                        <div class="stats-label">Total Appointments</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="stats-card animate-fadeInUp">
+                        <div class="stats-number">8</div>
+                        <div class="stats-label">Completed</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="stats-card animate-fadeInUp">
+                        <div class="stats-number">5</div>
+                        <div class="stats-label">Healthcare Providers</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="stats-card animate-fadeInUp">
+                        <div class="stats-number">2024</div>
+                        <div class="stats-label">Latest Visit</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="professional-card animate-fadeInUp">
+                        <div class="professional-header">
+                            <h3><i class="fas fa-clipboard-list me-2"></i>Medical Records</h3>
+                            <p class="mb-0">Chronological overview of your healthcare appointments</p>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="professional-timeline">
+                                <div class="timeline-item-professional" data-year="2024">
+                                    <div class="timeline-marker-professional">
+                                        <i class="fas fa-check" style="font-size: 10px; color: var(--gray-600);"></i>
+                                    </div>
+                                    <div class="card border-0 shadow-sm">
+                                        <div class="card-body p-4">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <div class="fw-bold text-primary">Dec</div>
+                                                    <div class="h4 mb-0">15</div>
+                                                    <div class="small text-muted">2024</div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h5 class="mb-2">
+                                                        <i class="fas fa-stethoscope me-2"></i>
+                                                        General Checkup
+                                                    </h5>
+                                                    <p class="text-muted mb-2">Routine health examination and wellness assessment</p>
+                                                    <div class="small">
+                                                        <strong>Provider:</strong> Dr. Smith (General Medicine)<br>
+                                                        <strong>Facility:</strong> City General Hospital<br>
+                                                        <strong>Time:</strong> 10:00 AM
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 text-center">
+                                                    <span class="professional-badge status-completed">Completed</span>
+                                                </div>
+                                                <div class="col-md-2 text-end">
+                                                    <button class="btn-outline-professional btn-sm" onclick="showFeatureDemo('View Medical Report')">
+                                                        <i class="fas fa-file-medical me-1"></i>Report
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item-professional" data-year="2024">
+                                    <div class="timeline-marker-professional">
+                                        <i class="fas fa-clock" style="font-size: 10px; color: var(--gray-600);"></i>
+                                    </div>
+                                    <div class="card border-0 shadow-sm">
+                                        <div class="card-body p-4">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <div class="fw-bold text-primary">Dec</div>
+                                                    <div class="h4 mb-0">20</div>
+                                                    <div class="small text-muted">2024</div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h5 class="mb-2">
+                                                        <i class="fas fa-stethoscope me-2"></i>
+                                                        Cardiology Consultation
+                                                    </h5>
+                                                    <p class="text-muted mb-2">Heart health assessment and cardiovascular screening</p>
+                                                    <div class="small">
+                                                        <strong>Provider:</strong> Dr. Johnson (Cardiology)<br>
+                                                        <strong>Facility:</strong> Heart Care Center<br>
+                                                        <strong>Time:</strong> 2:30 PM
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 text-center">
+                                                    <span class="professional-badge status-pending">Pending</span>
+                                                </div>
+                                                <div class="col-md-2 text-end">
+                                                    <button class="btn-outline-professional btn-sm" disabled>
+                                                        <i class="fas fa-calendar me-1"></i>Upcoming
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item-professional" data-year="2024">
+                                    <div class="timeline-marker-professional">
+                                        <i class="fas fa-clock" style="font-size: 10px; color: var(--gray-600);"></i>
+                                    </div>
+                                    <div class="card border-0 shadow-sm">
+                                        <div class="card-body p-4">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <div class="fw-bold text-primary">Dec</div>
+                                                    <div class="h4 mb-0">25</div>
+                                                    <div class="small text-muted">2024</div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h5 class="mb-2">
+                                                        <i class="fas fa-stethoscope me-2"></i>
+                                                        Laboratory Tests
+                                                    </h5>
+                                                    <p class="text-muted mb-2">Blood work and diagnostic testing</p>
+                                                    <div class="small">
+                                                        <strong>Provider:</strong> Dr. Davis (Laboratory)<br>
+                                                        <strong>Facility:</strong> Metro Medical Center<br>
+                                                        <strong>Time:</strong> 9:00 AM
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 text-center">
+                                                    <span class="professional-badge status-pending">Pending</span>
+                                                </div>
+                                                <div class="col-md-2 text-end">
+                                                    <button class="btn-outline-professional btn-sm" disabled>
+                                                        <i class="fas fa-calendar me-1"></i>Upcoming
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item-professional" data-year="2023">
+                                    <div class="timeline-marker-professional">
+                                        <i class="fas fa-check" style="font-size: 10px; color: var(--gray-600);"></i>
+                                    </div>
+                                    <div class="card border-0 shadow-sm">
+                                        <div class="card-body p-4">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <div class="fw-bold text-primary">Nov</div>
+                                                    <div class="h4 mb-0">15</div>
+                                                    <div class="small text-muted">2023</div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h5 class="mb-2">
+                                                        <i class="fas fa-stethoscope me-2"></i>
+                                                        Annual Physical
+                                                    </h5>
+                                                    <p class="text-muted mb-2">Comprehensive annual health examination</p>
+                                                    <div class="small">
+                                                        <strong>Provider:</strong> Dr. Smith (General Medicine)<br>
+                                                        <strong>Facility:</strong> City General Hospital<br>
+                                                        <strong>Time:</strong> 11:00 AM
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 text-center">
+                                                    <span class="professional-badge status-completed">Completed</span>
+                                                </div>
+                                                <div class="col-md-2 text-end">
+                                                    <button class="btn-outline-professional btn-sm" onclick="showFeatureDemo('View Medical Report')">
+                                                        <i class="fas fa-file-medical me-1"></i>Report
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOOK APPOINTMENT -->
+    <div id="book-appointment" class="page-section">
+        <div class="professional-container">
+            <div class="professional-header animate-fadeInUp">
+                <h1><i class="fas fa-calendar-plus me-3"></i>Book Appointment</h1>
+                <p>Schedule your medical appointment with our healthcare providers</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="professional-card animate-fadeInUp">
+                        <div class="professional-header">
+                            <h3>Appointment Details</h3>
+                            <p>Please fill in all required information to schedule your appointment</p>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="alert alert-info" role="alert">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>Demo Mode:</strong> Fill out the form to see the appointment booking process.
+                            </div>
+                            <form id="appointmentForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Hospital *</label>
+                                        <select class="form-control" required>
+                                            <option value="">Select Hospital</option>
+                                            <option>City General Hospital</option>
+                                            <option>Heart Care Center</option>
+                                            <option>Metro Medical Center</option>
+                                            <option>Children's Hospital</option>
+                                            <option>Women's Health Center</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Specialization *</label>
+                                        <select class="form-control" required>
+                                            <option value="">Select Specialization</option>
+                                            <option>General Medicine</option>
+                                            <option>Cardiology</option>
+                                            <option>Dermatology</option>
+                                            <option>Orthopedics</option>
+                                            <option>Pediatrics</option>
+                                            <option>Gynecology</option>
+                                            <option>Neurology</option>
+                                            <option>Oncology</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Doctor *</label>
+                                        <select class="form-control" required>
+                                            <option value="">Select Doctor</option>
+                                            <option>Dr. Smith (General Medicine)</option>
+                                            <option>Dr. Johnson (Cardiology)</option>
+                                            <option>Dr. Davis (Laboratory)</option>
+                                            <option>Dr. Wilson (Dermatology)</option>
+                                            <option>Dr. Brown (Orthopedics)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Appointment Date *</label>
+                                        <input type="date" class="form-control" min="2024-12-16" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Appointment Time *</label>
+                                        <select class="form-control" required>
+                                            <option value="">Select Time</option>
+                                            <option>09:00 AM</option>
+                                            <option>09:30 AM</option>
+                                            <option>10:00 AM</option>
+                                            <option>10:30 AM</option>
+                                            <option>11:00 AM</option>
+                                            <option>11:30 AM</option>
+                                            <option>02:00 PM</option>
+                                            <option>02:30 PM</option>
+                                            <option>03:00 PM</option>
+                                            <option>03:30 PM</option>
+                                            <option>04:00 PM</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Phone Number *</label>
+                                        <input type="tel" class="form-control" placeholder="+1 (555) 123-4567" required>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label class="form-label">Reason for Visit *</label>
+                                        <textarea class="form-control" rows="4" placeholder="Please describe your symptoms or reason for the appointment in detail..." required></textarea>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label class="form-label">Insurance Information</label>
+                                        <input type="text" class="form-control" placeholder="Insurance provider and policy number (optional)">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="confirmationCheck" required>
+                                            <label class="form-check-label" for="confirmationCheck">
+                                                I confirm that the information provided is accurate and I understand the appointment policies.
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn-professional px-5">
+                                        <i class="fas fa-calendar-check me-2"></i>Book Appointment
+                                    </button>
+                                    <button type="button" class="btn-outline-professional px-5 ms-3" onclick="showPage('patient-dashboard')">
+                                        <i class="fas fa-times me-2"></i>Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DOCTOR DASHBOARD -->
+    <div id="doctor-dashboard" class="page-section">
+        <div class="professional-container">
+            <div class="professional-header animate-fadeInUp">
+                <h1><i class="fas fa-user-md me-3"></i>Doctor Dashboard</h1>
+                <p>Welcome back, Dr. Smith. Manage your appointments and patients.</p>
+            </div>
+
+            <!-- Success Message -->
+            <div class="success-message" id="doctorSuccessMessage">
+                <i class="fas fa-check-circle me-2"></i>Welcome to your Doctor Dashboard! Manage appointments and patient care.
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="row mb-4">
+                <div class="col-md-3 mb-3">
+                    <div class="stats-card animate-fadeInUp">
+                        <div class="stats-number">8</div>
+                        <div class="stats-label">Today's Appointments</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="stats-card animate-fadeInUp">
+                        <div class="stats-number">156</div>
+                        <div class="stats-label">Total Patients</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="stats-card animate-fadeInUp">
+                        <div class="stats-number">12</div>
+                        <div class="stats-label">Pending Reports</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="stats-card animate-fadeInUp">
+                        <div class="stats-number">4.8/5</div>
+                        <div class="stats-label">Patient Rating</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Today's Schedule -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="professional-card animate-fadeInUp">
+                        <div class="professional-header">
+                            <h3>Today's Schedule</h3>
+                            <p>Manage your appointments and patient consultations</p>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="table-responsive">
+                                <table class="table table-professional">
+                                    <thead>
+                                        <tr>
+                                            <th>Time</th>
+                                            <th>Patient</th>
+                                            <th>Reason</th>
+                                            <th>Type</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>09:00 AM</strong></td>
+                                            <td>
+                                                <div>
+                                                    <strong>John Doe</strong><br>
+                                                    <small class="text-muted">Age: 45, Male</small>
+                                                </div>
+                                            </td>
+                                            <td>General Checkup</td>
+                                            <td><span class="badge bg-info">Routine</span></td>
+                                            <td><span class="professional-badge status-completed">Completed</span></td>
+                                            <td>
+                                                <button class="btn-outline-professional btn-sm me-1" onclick="showFeatureDemo('View Patient Details')">
+                                                    <i class="fas fa-eye me-1"></i>View
+                                                </button>
+                                                <button class="btn-professional btn-sm" onclick="showFeatureDemo('Generate Report')">
+                                                    <i class="fas fa-file-medical me-1"></i>Report
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>10:00 AM</strong></td>
+                                            <td>
+                                                <div>
+                                                    <strong>Jane Smith</strong><br>
+                                                    <small class="text-muted">Age: 32, Female</small>
+                                                </div>
+                                            </td>
+                                            <td>Follow-up Consultation</td>
+                                            <td><span class="badge bg-warning">Follow-up</span></td>
+                                            <td><span class="professional-badge status-pending">In Progress</span></td>
+                                            <td>
+                                                <button class="btn-professional btn-sm me-1" onclick="showFeatureDemo('Start Consultation')">
+                                                    <i class="fas fa-play me-1"></i>Start
+                                                </button>
+                                                <button class="btn-outline-professional btn-sm" onclick="showFeatureDemo('Patient History')">
+                                                    <i class="fas fa-history me-1"></i>History
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>10:30 AM</strong></td>
+                                            <td>
+                                                <div>
+                                                    <strong>Mike Johnson</strong><br>
+                                                    <small class="text-muted">Age: 28, Male</small>
+                                                </div>
+                                            </td>
+                                            <td>Chest Pain Consultation</td>
+                                            <td><span class="badge bg-danger">Urgent</span></td>
+                                            <td><span class="professional-badge status-pending">Waiting</span></td>
+                                            <td>
+                                                <button class="btn-professional btn-sm me-1" onclick="showFeatureDemo('Start Consultation')">
+                                                    <i class="fas fa-stethoscope me-1"></i>Examine
+                                                </button>
+                                                <button class="btn-outline-professional btn-sm" onclick="showFeatureDemo('Reschedule')">
+                                                    <i class="fas fa-calendar me-1"></i>Reschedule
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>11:30 AM</strong></td>
+                                            <td>
+                                                <div>
+                                                    <strong>Sarah Wilson</strong><br>
+                                                    <small class="text-muted">Age: 38, Female</small>
+                                                </div>
+                                            </td>
+                                            <td>Diabetes Management</td>
+                                            <td><span class="badge bg-primary">Chronic Care</span></td>
+                                            <td><span class="professional-badge status-pending">Scheduled</span></td>
+                                            <td>
+                                                <button class="btn-outline-professional btn-sm me-1" onclick="showFeatureDemo('View Patient Details')">
+                                                    <i class="fas fa-user me-1"></i>Profile
+                                                </button>
+                                                <button class="btn-outline-professional btn-sm" onclick="showFeatureDemo('Medical History')">
+                                                    <i class="fas fa-file-medical me-1"></i>Records
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="professional-card animate-fadeInUp">
+                        <div class="professional-header">
+                            <h4>Quick Actions</h4>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-grid gap-2">
+                                <button class="btn-professional" onclick="showFeatureDemo('Add Patient Notes')">
+                                    <i class="fas fa-notes-medical me-2"></i>Add Patient Notes
+                                </button>
+                                <button class="btn-outline-professional" onclick="showFeatureDemo('View Patient Records')">
+                                    <i class="fas fa-folder-open me-2"></i>View Patient Records
+                                </button>
+                                <button class="btn-outline-professional" onclick="showFeatureDemo('Prescription Management')">
+                                    <i class="fas fa-prescription me-2"></i>Prescription Management
+                                </button>
+                                <button class="btn-outline-professional" onclick="showFeatureDemo('Lab Results')">
+                                    <i class="fas fa-flask me-2"></i>Review Lab Results
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="professional-card animate-fadeInUp">
+                        <div class="professional-header">
+                            <h4>Recent Activities</h4>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="mb-3 p-3 bg-light rounded">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <strong>Patient consultation completed</strong><br>
+                                        <small class="text-muted">John Doe - General checkup</small>
+                                    </div>
+                                    <small class="text-muted">1 hour ago</small>
+                                </div>
+                            </div>
+                            <div class="mb-3 p-3 bg-light rounded">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <strong>Lab results reviewed</strong><br>
+                                        <small class="text-muted">Sarah Wilson - Blood work</small>
+                                    </div>
+                                    <small class="text-muted">2 hours ago</small>
+                                </div>
+                            </div>
+                            <div class="mb-3 p-3 bg-light rounded">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <strong>Prescription updated</strong><br>
+                                        <small class="text-muted">Mike Johnson - Pain medication</small>
+                                    </div>
+                                    <small class="text-muted">3 hours ago</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HOSPITAL DASHBOARD -->
+    <div id="hospital-dashboard" class="page-section">
+        <div class="professional-container">
+            <div class="professional-header animate-fadeInUp">
+                <h1><i class="fas fa-hospital me-3"></i>Hospital Dashboard</h1>
+                <p>City General Hospital - Administrative Overview and Management</p>
+            </div>
+
+            <!-- Success Message -->
+            <div class="success-message" id="hospitalSuccessMessage">
+                <i class="fas fa-check-circle me-2"></i>Welcome to Hospital Administration! Manage your facility operations.
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="row mb-4">
+                <div class="col-md-3 mb-3">
+                    <div class="stats-card animate-fadeInUp">
+                        <div class="stats-number">45</div>
+                        <div class="stats-label">Active Doctors</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="stats-card animate-fadeInUp">
+                        <div class="stats-number">1,250</div>
+                        <div class="stats-label">Registered Patients</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="stats-card animate-fadeInUp">
+                        <div class="stats-number">120</div>
+                        <div class="stats-label">Today's Appointments</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="stats-card animate-fadeInUp">
+                        <div class="stats-number">85%</div>
+                        <div class="stats-label">Bed Occupancy</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hospital Management Sections -->
+            <div class="row">
+                <!-- Doctor Management -->
+                <div class="col-md-6 mb-4">
+                    <div class="professional-card animate-fadeInUp">
+                        <div class="professional-header">
+                            <h4>Doctor Management</h4>
+                            <p>Manage medical staff and specializations</p>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="mb-3">
+                                <button class="btn-professional w-100" onclick="showFeatureDemo('Add New Doctor')">
+                                    <i class="fas fa-user-plus me-2"></i>Add New Doctor
+                                </button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Doctor</th>
+                                            <th>Specialization</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Dr. Smith</strong></td>
+                                            <td>General Medicine</td>
+                                            <td><span class="badge bg-success">Active</span></td>
+                                            <td>
+                                                <button class="btn-outline-professional btn-sm" onclick="showFeatureDemo('Manage Doctor')">
+                                                    <i class="fas fa-cog"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Dr. Johnson</strong></td>
+                                            <td>Cardiology</td>
+                                            <td><span class="badge bg-success">Active</span></td>
+                                            <td>
+                                                <button class="btn-outline-professional btn-sm" onclick="showFeatureDemo('Manage Doctor')">
+                                                    <i class="fas fa-cog"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Dr. Davis</strong></td>
+                                            <td>Laboratory</td>
+                                            <td><span class="badge bg-warning">Busy</span></td>
+                                            <td>
+                                                <button class="btn-outline-professional btn-sm" onclick="showFeatureDemo('Manage Doctor')">
+                                                    <i class="fas fa-cog"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Department Overview -->
+                <div class="col-md-6 mb-4">
+                    <div class="professional-card animate-fadeInUp">
+                        <div class="professional-header">
+                            <h4>Department Overview</h4>
+                            <p>Hospital departments and capacity</p>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="mb-3 p-3 bg-light rounded">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>Emergency Department</strong><br>
+                                        <small class="text-muted">24/7 Emergency Care</small>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="fw-bold text-success">Available</div>
+                                        <small>8/10 beds</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3 p-3 bg-light rounded">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>Cardiology</strong><br>
+                                        <small class="text-muted">Heart and Vascular Care</small>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="fw-bold text-warning">Busy</div>
+                                        <small>12/15 beds</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3 p-3 bg-light rounded">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>General Medicine</strong><br>
+                                        <small class="text-muted">Primary Care Services</small>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="fw-bold text-success">Available</div>
+                                        <small>18/25 beds</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activities -->
+                <div class="col-md-6 mb-4">
+                    <div class="professional-card animate-fadeInUp">
+                        <div class="professional-header">
+                            <h4>Recent Activities</h4>
+                            <p>Hospital operations and updates</p>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="mb-3 p-3 bg-light rounded">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <strong>New patient registration</strong><br>
+                                        <small class="text-muted">Jane Doe registered for cardiology</small>
+                                    </div>
+                                    <small class="text-muted">30 min ago</small>
+                                </div>
+                            </div>
+                            <div class="mb-3 p-3 bg-light rounded">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <strong>Doctor schedule updated</strong><br>
+                                        <small class="text-muted">Dr. Smith added evening slots</small>
+                                    </div>
+                                    <small class="text-muted">1 hour ago</small>
+                                </div>
+                            </div>
+                            <div class="mb-3 p-3 bg-light rounded">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <strong>Equipment maintenance</strong><br>
+                                        <small class="text-muted">MRI machine scheduled for service</small>
+                                    </div>
+                                    <small class="text-muted">2 hours ago</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="col-md-6 mb-4">
+                    <div class="professional-card animate-fadeInUp">
+                        <div class="professional-header">
+                            <h4>Administrative Actions</h4>
+                            <p>Hospital management tools</p>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-grid gap-2">
+                                <button class="btn-professional" onclick="showFeatureDemo('Hospital Analytics')">
+                                    <i class="fas fa-chart-bar me-2"></i>View Analytics
+                                </button>
+                                <button class="btn-outline-professional" onclick="showFeatureDemo('Staff Management')">
+                                    <i class="fas fa-users me-2"></i>Manage Staff
+                                </button>
+                                <button class="btn-outline-professional" onclick="showFeatureDemo('Resource Planning')">
+                                    <i class="fas fa-calendar-alt me-2"></i>Resource Planning
+                                </button>
+                                <button class="btn-outline-professional" onclick="showFeatureDemo('Financial Reports')">
+                                    <i class="fas fa-dollar-sign me-2"></i>Financial Reports
+                                </button>
+                                <button class="btn-outline-professional" onclick="showFeatureDemo('Quality Metrics')">
+                                    <i class="fas fa-award me-2"></i>Quality Metrics
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background-color: var(--white); border-top: 1px solid var(--gray-200); margin-top: 3rem;">
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="text-muted mb-0">&copy; 2024 MedCare Professional. Advanced Healthcare Management System.</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <small class="text-muted">Secure • Reliable • Professional • HIPAA Compliant</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Global state management
+        let currentUser = null;
+        let userType = null;
+
+        // Page navigation system
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                
+                // Initialize page-specific features
+                if (pageId === 'medical-timeline') {
+                    setTimeout(() => initHealthChart(), 200);
+                }
+                
+                // Show welcome message for dashboards
+                if (pageId.includes('dashboard')) {
+                    setTimeout(() => {
+                        const successMsg = pageId === 'patient-dashboard' ? 'successMessage' :
+                                         pageId === 'doctor-dashboard' ? 'doctorSuccessMessage' :
+                                         pageId === 'hospital-dashboard' ? 'hospitalSuccessMessage' : null;
+                        if (successMsg) {
+                            const msgElement = document.getElementById(successMsg);
+                            if (msgElement) {
+                                msgElement.style.display = 'block';
+                                setTimeout(() => {
+                                    msgElement.style.display = 'none';
+                                }, 4000);
+                            }
+                        }
+                    }, 500);
+                }
+            }
+        }
+
+        // Show appropriate dashboard based on user type
+        function showDashboard() {
+            const dashboardMap = {
+                'patient': 'patient-dashboard',
+                'doctor': 'doctor-dashboard',
+                'hospital': 'hospital-dashboard'
+            };
+            
+            const dashboard = dashboardMap[userType];
+            if (dashboard) {
+                showPage(dashboard);
+            }
+        }
+
+        // Demo login functionality
+        function demoLogin(type) {
+            userType = type;
+            const userNames = {
+                'patient': 'John Doe',
+                'doctor': 'Dr. Smith',
+                'hospital': 'City General Hospital'
+            };
+            
+            currentUser = userNames[type];
+            
+            // Update UI for logged in user
+            document.getElementById('nav-guest').style.display = 'none';
+            document.getElementById('nav-user').style.display = 'flex';
+            document.getElementById('current-user').textContent = currentUser;
+            
+            // Show appropriate dashboard
+            showDashboard();
+            
+            // Show success notification
+            setTimeout(() => {
+                alert(`Welcome to MedCare Professional!\nLogged in as: ${currentUser}\nExplore all the features of the ${type} portal.`);
+            }, 500);
+        }
+
+        // Login form handling
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const selectedType = document.getElementById('userType').value;
+            demoLogin(selectedType);
+        });
+
+        // Register form handling
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="loading-spinner me-2"></span>Creating Account...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                alert('Registration successful!\nYour account has been created.\nYou can now login to access the system.');
+                showPage('login');
+            }, 2000);
+        });
+
+        // Appointment booking form handling
+        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="loading-spinner me-2"></span>Booking Appointment...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                alert('Appointment booked successfully!\n\nConfirmation Details:\n• Appointment ID: MED-2024-001\n• Date & Time: As selected\n• Status: Confirmed\n\nYou will receive a confirmation email shortly.');
+                showPage('patient-dashboard');
+            }, 2000);
+        });
+
+        // Logout functionality
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                currentUser = null;
+                userType = null;
+                
+                // Reset UI to guest state
+                document.getElementById('nav-guest').style.display = 'flex';
+                document.getElementById('nav-user').style.display = 'none';
+                
+                showPage('home');
+                alert('You have been logged out successfully.\nThank you for using MedCare Professional!');
+            }
+        }
+
+        // Feature demo notifications
+        function showFeatureDemo(featureName) {
+            const demoMessages = {
+                'Request Report': 'Demo: Medical report request feature\n\nThis would allow patients to:\n• Request specific medical reports\n• Track report status\n• Download completed reports\n• Set delivery preferences',
+                'Upload Records': 'Demo: Medical records upload feature\n\nThis would allow patients to:\n• Upload medical documents\n• Scan and attach reports\n• Organize medical history\n• Share with healthcare providers',
+                'View Medical Report': 'Demo: Medical report viewer\n\nThis would display:\n• Detailed medical report\n• Test results and analysis\n• Doctor recommendations\n• Download and print options',
+                'View Patient Details': 'Demo: Patient profile system\n\nThis would show:\n• Complete patient information\n• Medical history summary\n• Contact and insurance details\n• Emergency contacts',
+                'Start Consultation': 'Demo: Digital consultation platform\n\nThis would provide:\n• Video consultation interface\n• Patient vital signs input\n• Real-time note taking\n• Prescription generation',
+                'Generate Report': 'Demo: Medical report generation\n\nThis would create:\n• Professional medical reports\n• Diagnosis and treatment plans\n• Prescription details\n• Follow-up recommendations'
+            };
+            
+            const message = demoMessages[featureName] || `Demo: ${featureName} feature\n\nThis feature would provide comprehensive functionality for ${featureName.toLowerCase()} in the full application.`;
+            alert(message);
+        }
+
+        // Timeline filtering
+        function filterTimeline(year) {
+            const items = document.querySelectorAll('.timeline-item-professional');
+            
+            // Update button states
+            document.querySelectorAll('.btn-group .btn-outline-professional').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Filter timeline items
+            items.forEach(item => {
+                if (year === 'all' || item.dataset.year === year) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Initialize health chart
+        function initHealthChart() {
+            const canvas = document.getElementById('healthChart');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            
+            // Dummy data for professional chart
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan 2024', 'Feb 2024', 'Mar 2024', 'Apr 2024', 'May 2024', 'Jun 2024', 'Jul 2024', 'Aug 2024', 'Sep 2024', 'Oct 2024', 'Nov 2024', 'Dec 2024'],
+                    datasets: [
+                        {
+                            label: 'Completed Visits',
+                            data: [2, 1, 3, 2, 1, 4, 2, 3, 1, 2, 3, 1],
+                            borderColor: '#343a40',
+                            backgroundColor: 'rgba(52, 58, 64, 0.1)',
+                            borderWidth: 3,
+                            pointRadius: 6,
+                            pointBackgroundColor: '#343a40',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Pending Visits',
+                            data: [1, 0, 1, 1, 2, 1, 0, 1, 2, 1, 0, 2],
+                            borderColor: '#6c757d',
+                            backgroundColor: 'rgba(108, 117, 125, 0.1)',
+                            borderWidth: 3,
+                            borderDash: [8, 4],
+                            pointRadius: 6,
+                            pointBackgroundColor: '#6c757d',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            pointStyle: 'rect',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20,
+                                font: { size: 13, weight: '500' }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.8)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: '#343a40',
+                            borderWidth: 1,
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.parsed.y} appointment${context.parsed.y !== 1 ? 's' : ''}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Number of Appointments' },
+                            ticks: { stepSize: 1 },
+                            grid: { color: 'rgba(0,0,0,0.05)' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Time Period' },
+                            grid: { color: 'rgba(0,0,0,0.05)' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('home');
+            
+            // Add smooth scroll behavior
+            document.documentElement.style.scrollBehavior = 'smooth';
+            
+            // Initialize animations
+            const animatedElements = document.querySelectorAll('.animate-fadeInUp');
+            animatedElements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+
+        // Add keyboard navigation support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // Close any open modals or return to dashboard
+                if (currentUser) {
+                    showDashboard();
+                } else {
+                    showPage('home');
+                }
+            }
+        });
+
+        // Performance monitoring
+        window.addEventListener('load', function() {
+            console.log('MedCare Demo Application Loaded Successfully');
+            console.log('Available demo features:');
+            console.log('- Patient Portal: Complete appointment and medical history management');
+            console.log('- Doctor Portal: Patient consultations and medical records');
+            console.log('- Hospital Portal: Administrative tools and staff management');
+            console.log('- Professional UI: Clean, accessible healthcare design');
+        });
+    </script>
+</body>
+</html>

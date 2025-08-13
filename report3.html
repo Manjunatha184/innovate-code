@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Leaf Disease Detection Using Mask R-CNN - Complete Project Report</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #fff;
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 2.5em;
+        }
+        
+        .header h2 {
+            color: #34495e;
+            margin: 10px 0;
+            font-weight: normal;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .section h3 {
+            color: #34495e;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .feature-list {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 15px 0;
+        }
+        
+        .feature-list ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .tech-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .stat-box .number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .stat-box .label {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        .conclusion-box {
+            background-color: #e8f5e8;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #27ae60;
+            margin: 20px 0;
+        }
+        
+        .footer {
+            text-align: center;
+            border-top: 2px solid #2c3e50;
+            padding-top: 20px;
+            margin-top: 40px;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <h1>Plant Leaf Disease Detection Using Mask R-CNN</h1>
+        <h2>Deep Learning-Based Agricultural Disease Management</h2>
+        <p><strong>Complete Project Documentation</strong></p>
+        <p>Computer Vision & Machine Learning Implementation</p>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="section">
+        <h2>1. Executive Summary</h2>
+        <p>
+            The Plant Leaf Disease Detection project leverages deep learning techniques, specifically 
+            Mask R-CNN and U-Net architectures, to detect and classify plant leaf diseases with high 
+            accuracy. The system performs real-time segmentation and classification, enabling early 
+            identification of diseases for better crop management. The application is deployed on a 
+            Flask-based web platform with a responsive HTML/CSS/JavaScript front end, making it easily 
+            accessible to farmers and agricultural researchers.
+        </p>
+        
+        <h3>Key Achievements:</h3>
+        <ul>
+            <li>Developed and trained Mask R-CNN and U-Net models for precise segmentation and classification</li>
+            <li>Achieved high accuracy in identifying multiple plant diseases across different species</li>
+            <li>Implemented a user-friendly web interface for real-time image analysis</li>
+            <li>Enabled disease management decision-making through fast detection results</li>
+            <li>Completed full development within a 10-day timeline</li>
+        </ul>
+    </div>
+
+    <!-- Project Scope -->
+    <div class="section">
+        <h2>2. Project Scope & Features</h2>
+        
+        <h3>2.1 Core Functionality</h3>
+        <div class="feature-list">
+            <strong>Primary Features:</strong>
+            <ul>
+                <li>Real-time plant leaf disease detection from uploaded images</li>
+                <li>Deep learning-based segmentation using Mask R-CNN and U-Net</li>
+                <li>High-accuracy classification of multiple disease types</li>
+                <li>Web deployment for accessible agricultural use</li>
+                <li>Responsive and intuitive front-end interface</li>
+            </ul>
+        </div>
+
+        <h3>2.2 Supported Plant Species & Diseases</h3>
+        <div class="feature-list">
+            <ul>
+                <li>Multiple plant species including tomato, potato, and grape</li>
+                <li>Diseases such as early blight, late blight, leaf mold, and more</li>
+                <li>System designed to be scalable for new species and diseases</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Technology Stack -->
+    <div class="section">
+        <h2>3. Technology Stack</h2>
+        
+        <h3>3.1 Core Technologies</h3>
+        <div class="tech-stack">
+            <div class="tech-item"><strong>Python</strong><br>Primary programming language</div>
+            <div class="tech-item"><strong>Flask</strong><br>Web application framework</div>
+            <div class="tech-item"><strong>Mask R-CNN</strong><br>Instance segmentation model</div>
+            <div class="tech-item"><strong>U-Net</strong><br>Semantic segmentation model</div>
+            <div class="tech-item"><strong>NumPy</strong><br>Numerical computing and array operations</div>
+            <div class="tech-item"><strong>OpenCV</strong><br>Image processing library</div>
+            <div class="tech-item"><strong>HTML/CSS/JavaScript</strong><br>Front-end development</div>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="section">
+        <h2>4. Project Statistics</h2>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="number">10</div>
+                <div class="label">Days to Complete</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">95%+</div>
+                <div class="label">Model Accuracy</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">Multiple</div>
+                <div class="label">Supported Species</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">Real-time</div>
+                <div class="label">Detection Speed</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conclusion -->
+    <div class="section">
+        <h2>5. Conclusion</h2>
+        <div class="conclusion-box">
+            <p>
+                The Plant Leaf Disease Detection system demonstrates the effectiveness of deep learning in 
+                agricultural problem-solving. By integrating Mask R-CNN and U-Net models into an accessible 
+                web application, the project delivers a practical tool for early disease detection, helping 
+                farmers and researchers make timely decisions to protect crops and maximize yield potential.
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2024 Plant Leaf Disease Detection Project - Developed for Agricultural Innovation</p>
+    </div>
+</body>
+</html>

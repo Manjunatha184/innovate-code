@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Innov8Code</title>
+    <style>
+        /* CSS Variables - Color Palette */
+        :root {
+            --soft-blue: #6b99c3;
+            --lavender: #a594c7;
+            --mint-green: #8bc8a3;
+            --coral: #e6a4a4;
+            --cream: #f9f7f4;
+            --light-gray: #f3f6fa;
+            --soft-yellow: #f5e6b8;
+            --pale-pink: #f7e6f3;
+            --powder-blue: #d6e5f0;
+            --text-dark: #2d3748;
+            --text-light: #4a5568;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--pale-pink) 50%, var(--soft-yellow) 100%);
+            background-attachment: fixed;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Bar - Mobile Optimized */
+        .navbar {
+            width: 100%;
+            background: linear-gradient(135deg, var(--soft-blue) 0%, var(--lavender) 50%, var(--mint-green) 100%);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(107, 153, 195, 0.3);
+            height: 70px;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-content {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            color: white;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #ffffff;
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, var(--powder-blue) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--soft-blue) 0%, var(--lavender) 50%, var(--mint-green) 100%);
+        }
+
+        .page-header h1 {
+            font-size: clamp(3rem, 5vw, 4rem);
+            font-weight: 700;
+            background: linear-gradient(45deg, #1e293b, var(--soft-blue), var(--lavender));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .page-header p {
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 6rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Contact Info - Centered Layout */
+        .contact-info {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, var(--light-gray) 100%);
+            border: 2px solid rgba(107, 153, 195, 0.3);
+            border-radius: 20px;
+            padding: 4rem 3rem;
+            box-shadow: 0 12px 40px rgba(107, 153, 195, 0.15);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .contact-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(135deg, var(--soft-blue) 0%, var(--lavender) 50%, var(--mint-green) 100%);
+        }
+
+        .contact-info h2 {
+            font-size: clamp(2.2rem, 5vw, 2.8rem);
+            font-weight: 700;
+            background: linear-gradient(45deg, #1e293b, var(--soft-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 3rem;
+        }
+
+        .contact-methods {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-method {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2.5rem 2rem;
+            background: rgba(255,255,255,0.8);
+            border-radius: 20px;
+            border: 2px solid var(--powder-blue);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .contact-method:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(107, 153, 195, 0.25);
+            border-color: var(--soft-blue);
+        }
+
+        .contact-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: white;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-method:hover .contact-icon {
+            transform: scale(1.1);
+        }
+
+        .whatsapp-icon {
+            background: linear-gradient(135deg, #25d366 0%, #1ebe57 100%);
+        }
+
+        .email-icon {
+            background: linear-gradient(135deg, var(--coral) 0%, #f87171 100%);
+        }
+
+        .phone-icon {
+            background: linear-gradient(135deg, var(--soft-blue) 0%, var(--lavender) 100%);
+        }
+
+        .contact-details h3 {
+            font-size: clamp(1.3rem, 3vw, 1.5rem);
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.75rem;
+        }
+
+        .contact-details p {
+            color: var(--text-light);
+            font-size: clamp(0.95rem, 2vw, 1rem);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .contact-details .contact-value {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: clamp(1.1rem, 2.5vw, 1.2rem);
+        }
+
+        /* Response Times Section */
+        .response-times {
+            background: linear-gradient(135deg, var(--powder-blue) 0%, rgba(255,255,255,0.9) 100%);
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 2px solid rgba(107, 153, 195, 0.3);
+            margin-top: 3rem;
+        }
+
+        .response-times h3 {
+            font-size: clamp(1.5rem, 3vw, 1.8rem);
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .response-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .response-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.8);
+            border-radius: 12px;
+            border: 1px solid var(--powder-blue);
+        }
+
+        .response-item .emoji {
+            font-size: 1.5rem;
+        }
+
+        .response-item .text {
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        /* Button Styles */
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25d366 0%, #1ebe57 100%);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            transition: all 0.4s ease;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            position: relative;
+            overflow: hidden;
+            min-width: 250px;
+        }
+
+        .btn-whatsapp::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-whatsapp:hover::before {
+            left: 100%;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.5);
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Quick Contact Section */
+        .quick-contact {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, var(--soft-blue) 0%, var(--lavender) 50%, var(--mint-green) 100%);
+            text-align: center;
+            color: white;
+        }
+
+        .quick-contact h2 {
+            font-size: clamp(2.5rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .quick-contact p {
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        /* Desktop Responsive Design */
+        @media (min-width: 768px) {
+            .contact-methods {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+            
+            .response-list {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .contact-methods {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+            
+            .response-list {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        /* Mobile Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                height: auto;
+                min-height: 70px;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background: linear-gradient(135deg, var(--soft-blue) 0%, var(--lavender) 50%, var(--mint-green) 100%);
+                padding: 1rem 0;
+                box-shadow: 0 4px 10px rgba(107, 153, 195, 0.3);
+                gap: 0;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-link {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+                width: 100%;
+                text-align: left;
+                border-radius: 0;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            .nav-link:last-child {
+                border-bottom: none;
+            }
+            
+            .nav-link:hover,
+            .nav-link.active {
+                background: rgba(255,255,255,0.15);
+                transform: none;
+            }
+            
+            .nav-content {
+                padding: 1rem;
+            }
+            
+            .page-header {
+                padding: 4rem 1rem 3rem;
+            }
+            
+            .contact-section {
+                padding: 4rem 1rem;
+            }
+            
+            .contact-info {
+                padding: 3rem 2rem;
+            }
+            
+            .contact-method {
+                padding: 2rem 1.5rem;
+            }
+            
+            .response-times {
+                padding: 2rem;
+            }
+            
+            .quick-contact {
+                padding: 4rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-content {
+                padding: 0.5rem 1rem;
+            }
+            
+            .logo {
+                font-size: 1.6rem;
+            }
+            
+            .menu-toggle {
+                font-size: 1.6rem;
+            }
+            
+            .contact-info {
+                padding: 2rem 1.5rem;
+            }
+            
+            .contact-method {
+                padding: 1.5rem 1rem;
+            }
+            
+            .contact-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
+            }
+            
+            .response-times {
+                padding: 1.5rem;
+            }
+            
+            .btn-whatsapp {
+                width: 100%;
+                max-width: 350px;
+                min-width: auto;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in-up.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Touch Improvements for Mobile */
+        @media (hover: none) {
+            .contact-method:hover {
+                transform: none;
+            }
+            
+            .contact-method:active {
+                transform: scale(0.98);
+            }
+            
+            .btn-whatsapp:hover {
+                transform: none;
+            }
+            
+            .btn-whatsapp:active {
+                transform: scale(0.98);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="index.html" class="logo">Innov8Code</a>
+            <button class="menu-toggle" aria-label="Toggle navigation menu">☰</button>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="demo-projects.html" class="nav-link">Demo Projects</a>
+                <a href="contact.html" class="nav-link active">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1 class="fade-in-up">Get In Touch</h1>
+        <p class="fade-in-up">Ready to bring your academic project ideas to life? We're here to help you succeed with professional development services and expert guidance.</p>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-info fade-in-up">
+            <h2>Contact Information</h2>
+            
+            <div class="contact-methods">
+                <div class="contact-method" onclick="openWhatsApp()">
+                    <div class="contact-icon whatsapp-icon">📱</div>
+                    <div class="contact-details">
+                        <h3>WhatsApp</h3>
+                        <p>Instant messaging & quick responses for urgent project requirements</p>
+                        <div class="contact-value">+91 8073912688</div>
+                    </div>
+                </div>
+                
+                <div class="contact-method" onclick="openEmail()">
+                    <div class="contact-icon email-icon">📧</div>
+                    <div class="contact-details">
+                        <h3>Email</h3>
+                        <p>Detailed project discussions and comprehensive requirements sharing</p>
+                        <div class="contact-value">anjankumar31n@gmail.com</div>
+                    </div>
+                </div>
+                
+                <div class="contact-method" onclick="callPhone()">
+                    <div class="contact-icon phone-icon">📞</div>
+                    <div class="contact-details">
+                        <h3>Phone</h3>
+                        <p>Direct consultation calls for project planning and guidance</p>
+                        <div class="contact-value">+91 8073912688</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Response Times Section -->
+            <div class="response-times">
+                <h3>Response Times</h3>
+                <ul class="response-list">
+                    <li class="response-item">
+                        <span class="emoji">💬</span>
+                        <span class="text">WhatsApp: Immediate response</span>
+                    </li>
+                    <li class="response-item">
+                        <span class="emoji">📧</span>
+                        <span class="text">Email: Within 2-4 hours</span>
+                    </li>
+                    <li class="response-item">
+                        <span class="emoji">📞</span>
+                        <span class="text">Phone: Available 9 AM - 9 PM</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Contact Section -->
+    <section class="quick-contact">
+        <h2 class="fade-in-up">Need Immediate Help?</h2>
+        <p class="fade-in-up">For urgent project requirements or quick consultations, reach out to us directly on WhatsApp for instant support and project guidance.</p>
+        <a href="https://wa.me/918073912688?text=Hi! I need urgent help with my academic project. Can we discuss the requirements immediately?" 
+           target="_blank" class="btn-whatsapp fade-in-up">
+            💬 WhatsApp Now
+        </a>
+    </section>
+
+    <script>
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                });
+                
+                // Close menu when clicking on a link (for mobile)
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (window.innerWidth <= 768) {
+                            navLinks.classList.remove('active');
+                        }
+                    });
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!menuToggle.contains(event.target) && !navLinks.contains(event.target)) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+            }
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach((element, index) => {
+            element.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(element);
+        });
+
+        // Contact methods - Updated with your actual contact details
+        function openWhatsApp() {
+            const message = "Hi Innov8Code! I'm interested in discussing my academic project requirements.";
+            window.open(`https://wa.me/918073912688?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function openEmail() {
+            window.open('mailto:anjankumar31n@gmail.com?subject=Academic Project Inquiry', '_blank');
+        }
+
+        function callPhone() {
+            window.open('tel:+918073912688', '_self');
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
