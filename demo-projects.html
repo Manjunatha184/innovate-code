@@ -660,16 +660,17 @@
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="nav-content">
-            <a href="#" class="logo">Innov8Code</a>
-            <div class="nav-links">
-    <a href="index.html" class="nav-link">Home</a>
-    <a href="demo-projects.html" class="nav-link active">Demo Projects</a>
-    <a href="contact.html" class="nav-link">Contact</a>
-</div>
-
+    <div class="nav-content">
+        <a href="index.html" class="logo">Innov8Code</a>
+        <button class="menu-toggle" aria-label="Toggle navigation menu">☰</button>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link active">Home</a>
+            <a href="demo-projects.html" class="nav-link">Demo Projects</a>
+            <a href="contact.html" class="nav-link">Contact</a>
         </div>
-    </nav>
+    </div>
+</nav>
+
 
     <div class="page-wrapper">
         <div class="container">
@@ -907,7 +908,7 @@
             </div>
             <div class="video-modal-footer">
                 <p><strong>💡 Impressed with this project?</strong> Contact us to get the complete source code, documentation, and setup guide!</p>
-                <a href="https://wa.me/919876543210?text=Hi! I'm interested in getting the full project from Innov8Code's demo portfolio" 
+                <a href="https://wa.me/918073912688?text=Hi! I'm interested in getting the full project from Innov8Code's demo portfolio" 
                    target="_blank" class="btn btn-whatsapp">
                     💬 Get Full Project on WhatsApp
                 </a>
@@ -933,7 +934,7 @@
         // Request project function
         function requestProject(projectName) {
             const message = `Hi Innov8Code! I'm interested in getting a project similar to "${projectName}" from your demo portfolio. Can you provide details about pricing and timeline?`;
-            const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(message)}`;
+            const whatsappUrl = `https://wa.me/918073912688?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
         }
 
@@ -1003,3 +1004,4 @@
     </script>
 </body>
 </html>
+
