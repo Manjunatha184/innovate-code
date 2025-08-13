@@ -35,7 +35,7 @@
             overflow-x: hidden;
         }
 
-        /* Navigation Bar */
+        /* Navigation Bar - Mobile Optimized */
         .navbar {
             width: 100%;
             background: linear-gradient(135deg, var(--soft-blue) 0%, var(--lavender) 50%, var(--mint-green) 100%);
@@ -57,6 +57,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 2rem;
+            position: relative;
         }
 
         .logo {
@@ -82,7 +83,7 @@
             font-weight: 600;
             font-size: 1rem;
             transition: all 0.3s ease;
-            position: relative;
+            white-space: nowrap;
         }
 
         .nav-link:hover,
@@ -90,6 +91,22 @@
             color: #ffffff;
             background: rgba(255,255,255,0.2);
             transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            background: rgba(255,255,255,0.1);
         }
 
         /* Hero Section */
@@ -404,39 +421,55 @@
             text-decoration: none;
         }
 
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .nav-content {
-                padding: 0 1.5rem;
-            }
-            
-            .features-grid {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 2rem;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2rem;
-            }
-        }
-
+        /* Mobile Responsive Design */
         @media (max-width: 768px) {
-            .nav-content {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1rem;
+            .navbar {
+                height: auto;
+                min-height: 70px;
+            }
+            
+            .menu-toggle {
+                display: block;
             }
             
             .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 0.5rem;
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background: linear-gradient(135deg, var(--soft-blue) 0%, var(--lavender) 50%, var(--mint-green) 100%);
+                padding: 1rem 0;
+                box-shadow: 0 4px 10px rgba(107, 153, 195, 0.3);
+                gap: 0;
+            }
+            
+            .nav-links.active {
+                display: flex;
             }
             
             .nav-link {
-                padding: 0.5rem 0.75rem;
-                font-size: 0.9rem;
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+                width: 100%;
+                text-align: left;
+                border-radius: 0;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            .nav-link:last-child {
+                border-bottom: none;
+            }
+            
+            .nav-link:hover,
+            .nav-link.active {
+                background: rgba(255,255,255,0.15);
+                transform: none;
+            }
+            
+            .nav-content {
+                padding: 1rem;
             }
             
             .hero-section {
@@ -478,7 +511,7 @@
             }
             
             .stats-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 2rem;
             }
             
@@ -488,6 +521,18 @@
         }
 
         @media (max-width: 480px) {
+            .nav-content {
+                padding: 0.5rem 1rem;
+            }
+            
+            .logo {
+                font-size: 1.6rem;
+            }
+            
+            .menu-toggle {
+                font-size: 1.6rem;
+            }
+            
             .hero-section {
                 padding: 4rem 1rem;
             }
@@ -515,6 +560,23 @@
             .feature-card h3 {
                 font-size: 1.5rem;
             }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 2rem;
+            }
         }
 
         /* Animation Classes */
@@ -533,16 +595,16 @@
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-    <div class="nav-content">
-        <a href="index.html" class="logo">Innov8Code</a>
-        <button class="menu-toggle" aria-label="Toggle navigation menu">☰</button>
-        <div class="nav-links">
-            <a href="index.html" class="nav-link active">Home</a>
-            <a href="demo-projects.html" class="nav-link">Demo Projects</a>
-            <a href="contact.html" class="nav-link">Contact</a>
+        <div class="nav-content">
+            <a href="index.html" class="logo">Innov8Code</a>
+            <button class="menu-toggle" aria-label="Toggle navigation menu">☰</button>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="demo-projects.html" class="nav-link">Demo Projects</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
     <!-- Hero Section -->
     <section class="hero-section">
@@ -607,7 +669,79 @@
         </div>
     </section>
 
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <h2 class="section-title" style="color: white; margin-bottom: 2rem;">Our Track Record</h2>
+            <div class="stats-grid">
+                <div class="stat-item fade-in-up">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Projects Delivered</span>
+                </div>
+                <div class="stat-item fade-in-up">
+                    <span class="stat-number">200+</span>
+                    <span class="stat-label">Happy Students</span>
+                </div>
+                <div class="stat-item fade-in-up">
+                    <span class="stat-number">15+</span>
+                    <span class="stat-label">Technologies Mastered</span>
+                </div>
+                <div class="stat-item fade-in-up">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Support Available</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content fade-in-up">
+            <h2 class="cta-title">Ready to Start Your Project?</h2>
+            <p class="cta-description">
+                Join hundreds of students who have successfully completed their academic projects with our expert guidance. From initial concept to final submission, we're here to help you achieve excellence.
+            </p>
+            <div class="hero-actions">
+                <a href="https://wa.me/919876543210?text=Hi! I'm interested in discussing my academic project requirements with Innov8Code" 
+                   target="_blank" class="btn btn-whatsapp">
+                    💬 Start WhatsApp Chat
+                </a>
+                <a href="demo-projects.html" class="btn btn-secondary">
+                    📋 View Demo Projects
+                </a>
+            </div>
+        </div>
+    </section>
+
     <script>
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                });
+                
+                // Close menu when clicking on a link (for mobile)
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (window.innerWidth <= 768) {
+                            navLinks.classList.remove('active');
+                        }
+                    });
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!menuToggle.contains(event.target) && !navLinks.contains(event.target)) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+            }
+        });
+
         // Smooth scrolling for navigation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -647,8 +781,10 @@
             const statNumbers = document.querySelectorAll('.stat-number');
             
             statNumbers.forEach(stat => {
-                const target = parseInt(stat.textContent.replace('+', '').replace('/7', ''));
-                const isSpecial = stat.textContent.includes('/7');
+                const originalText = stat.textContent;
+                if (originalText === '24/7') return;
+                
+                const target = parseInt(originalText.replace('+', ''));
                 let current = 0;
                 
                 const increment = target / 50;
@@ -658,12 +794,7 @@
                         current = target;
                         clearInterval(timer);
                     }
-                    
-                    if (isSpecial) {
-                        stat.textContent = '24/7';
-                    } else {
-                        stat.textContent = Math.floor(current) + '+';
-                    }
+                    stat.textContent = Math.floor(current) + '+';
                 }, 40);
             });
         }
@@ -685,4 +816,3 @@
     </script>
 </body>
 </html>
-
